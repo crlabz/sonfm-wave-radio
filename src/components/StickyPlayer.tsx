@@ -10,34 +10,28 @@ const StickyPlayer = () => {
   const [volume, setVolume] = useState([70]);
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 glass border-t border-border">
-      {/* Audio Visualizer Background */}
-      <div className="absolute inset-0 opacity-20">
-        <AudioVisualizer />
-      </div>
-
-      <div className="container mx-auto px-4 py-4 relative z-10">
+    <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-border bg-background/80 backdrop-blur-xl">
+      <div className="container mx-auto px-4 py-3">
         <div className="flex flex-col md:flex-row items-center gap-4">
           {/* Now Playing Info */}
-          <div className="flex items-center gap-4 flex-1 min-w-0">
-            <div className="w-16 h-16 rounded-xl bg-gradient-primary flex items-center justify-center shrink-0 glow-primary">
-              <span className="text-2xl font-bold">W3</span>
+          <div className="flex items-center gap-3 flex-1 min-w-0">
+            <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-accent-purple to-accent-blue flex items-center justify-center shrink-0">
+              <span className="text-lg font-bold">W3</span>
             </div>
             <div className="min-w-0 flex-1">
-              <h4 className="font-semibold truncate">The Midnight Drive</h4>
-              <p className="text-sm text-muted-foreground truncate">DJ Luna • En vivo</p>
+              <h4 className="font-semibold truncate text-sm">The Midnight Drive</h4>
+              <p className="text-xs text-muted-foreground truncate">DJ Luna • En vivo</p>
             </div>
           </div>
 
           {/* Controls */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             <Button
               size="icon"
-              variant="ghost"
               onClick={() => setIsPlaying(!isPlaying)}
-              className="h-12 w-12 rounded-full bg-gradient-primary hover:scale-110 transition-all"
+              className="h-10 w-10 rounded-full"
             >
-              {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 ml-0.5" />}
+              {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" fill="currentColor" />}
             </Button>
           </div>
 
@@ -65,10 +59,10 @@ const StickyPlayer = () => {
           </div>
 
           {/* Live Indicator */}
-          <div className="flex items-center gap-2 glass px-4 py-2 rounded-full shrink-0">
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent border border-border shrink-0">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-blue opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-accent-blue" />
             </span>
             <span className="text-xs font-medium">EN VIVO</span>
           </div>

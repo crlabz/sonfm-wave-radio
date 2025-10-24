@@ -8,93 +8,113 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 240 15% 8%;
-    --foreground: 0 0% 100%;
+    --background: 0 0% 0%;
+    --foreground: 0 0% 98%;
 
-    --card: 240 15% 12%;
-    --card-foreground: 0 0% 100%;
+    --card: 0 0% 3%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 240 15% 10%;
-    --popover-foreground: 0 0% 100%;
+    --popover: 0 0% 3%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 270 95% 65%;
-    --primary-foreground: 0 0% 100%;
-    --primary-glow: 270 100% 75%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
 
-    --secondary: 180 95% 55%;
-    --secondary-foreground: 240 15% 8%;
-    --secondary-glow: 180 100% 65%;
+    --secondary: 240 5% 10%;
+    --secondary-foreground: 0 0% 98%;
 
-    --accent: 320 90% 60%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 240 5% 15%;
+    --accent-foreground: 0 0% 98%;
 
-    --muted: 240 15% 20%;
-    --muted-foreground: 240 5% 65%;
+    --muted: 240 5% 10%;
+    --muted-foreground: 240 5% 64%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 240 15% 20%;
-    --input: 240 15% 18%;
-    --ring: 270 95% 65%;
+    --border: 240 6% 10%;
+    --input: 240 6% 10%;
+    --ring: 0 0% 98%;
 
-    --radius: 1rem;
+    --radius: 0.5rem;
 
-    /* Web3 gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(270, 95%, 65%), hsl(180, 95%, 55%));
-    --gradient-secondary: linear-gradient(135deg, hsl(320, 90%, 60%), hsl(270, 95%, 65%));
-    --gradient-glow: linear-gradient(135deg, hsl(270, 100%, 75%), hsl(180, 100%, 65%));
+    /* Vercel-style gradients */
+    --gradient-fade: linear-gradient(180deg, transparent, hsl(0, 0%, 0%));
+    --gradient-radial: radial-gradient(ellipse at top, hsl(240, 5%, 10%), transparent);
     
-    /* Glass effect */
-    --glass-bg: rgba(255, 255, 255, 0.05);
-    --glass-border: rgba(255, 255, 255, 0.1);
+    /* Subtle accents */
+    --accent-blue: 217 91% 60%;
+    --accent-purple: 270 70% 60%;
+    --accent-pink: 330 81% 60%;
     
-    /* Shadows with glow */
-    --shadow-primary: 0 0 30px hsl(270, 95%, 65%, 0.3);
-    --shadow-secondary: 0 0 30px hsl(180, 95%, 55%, 0.3);
-    --shadow-glow: 0 0 60px hsl(270, 95%, 65%, 0.5);
+    /* Borders */
+    --border-subtle: hsla(240, 6%, 10%, 0.4);
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
     
     /* Animations */
+    --transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
 }
 
 @layer utilities {
-  .glass {
-    background: var(--glass-bg);
-    backdrop-filter: blur(20px);
-    border: 1px solid var(--glass-border);
+  .gradient-fade {
+    background: var(--gradient-fade);
   }
   
-  .glow-primary {
-    box-shadow: var(--shadow-primary);
+  .gradient-radial {
+    background: var(--gradient-radial);
   }
   
-  .glow-secondary {
-    box-shadow: var(--shadow-secondary);
+  .border-gradient {
+    position: relative;
+    border-radius: var(--radius);
   }
   
-  .text-glow {
-    text-shadow: 0 0 20px currentColor;
+  .border-gradient::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, hsla(0, 0%, 100%, 0.1), transparent);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
   }
   
-  .animate-float {
-    animation: float 3s ease-in-out infinite;
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-in;
   }
   
-  @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
   
-  .animate-pulse-glow {
-    animation: pulse-glow 2s ease-in-out infinite;
+  .animate-slide-up {
+    animation: slideUp 0.5s ease-out;
   }
   
-  @keyframes pulse-glow {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.6; }
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 }
 

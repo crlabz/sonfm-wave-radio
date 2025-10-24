@@ -1,85 +1,73 @@
-import { Instagram, Twitter } from 'lucide-react';
-
-const hostsData = [
+const hosts = [
   {
     name: 'DJ Luna',
-    show: 'The Midnight Drive',
-    bio: 'Especialista en synthwave y electrónica retro-futurista',
-    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop',
+    specialty: 'Synthwave & Electrónica',
+    bio: 'Experta en música electrónica retro-futurista con 10 años de experiencia.',
+    avatar: '🌙',
+    socials: ['Instagram', 'Twitter'],
   },
   {
-    name: 'DJ Aurora',
-    show: 'Buenos Días Web3',
-    bio: 'Tu compañía matutina con las mejores noticias y pop',
-    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop',
+    name: 'DJ Nova',
+    specialty: 'House & EDM',
+    bio: 'Produciendo beats que mueven multitudes desde 2015.',
+    avatar: '⭐',
+    socials: ['Instagram', 'Twitter'],
   },
   {
-    name: 'MC Flow',
-    show: 'Ritmos Urbanos',
-    bio: 'Experto en hip hop y cultura urbana contemporánea',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop',
+    name: 'Sofia Mix',
+    specialty: 'Pop & Techno',
+    bio: 'Mezclando los mejores ritmos para tu día.',
+    avatar: '🎧',
+    socials: ['Instagram', 'Twitter'],
   },
   {
-    name: 'DJ Neon',
-    show: 'Electronic Dreams',
-    bio: 'Llevando el house y techno a otro nivel',
-    image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=400&fit=crop',
+    name: 'Carlos Spin',
+    specialty: 'Funk & Dark Techno',
+    bio: 'Llevando el groove a otro nivel todas las noches.',
+    avatar: '🎵',
+    socials: ['Instagram', 'Twitter'],
   },
 ];
 
 const Hosts = () => {
   return (
-    <section id="hosts" className="py-20 relative">
+    <section id="hosts" className="py-20 border-b border-border">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-6xl font-bold mb-4 bg-gradient-secondary bg-clip-text text-transparent">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Nuestros Locutores
           </h2>
-          <p className="text-muted-foreground text-lg">
-            El equipo que hace posible la magia
+          <p className="text-muted-foreground">
+            Los mejores DJs y locutores en un solo lugar
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {hostsData.map((host, index) => (
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {hosts.map((host) => (
             <div
-              key={index}
-              className="group animate-in fade-in slide-in-from-bottom-5"
-              style={{ animationDelay: `${index * 100}ms` }}
+              key={host.name}
+              className="p-6 rounded-2xl bg-card border border-border hover:border-accent-blue/50 transition-all duration-300 cursor-pointer group"
             >
-              <div className="glass rounded-3xl overflow-hidden hover:scale-105 transition-all duration-300">
-                {/* Image */}
-                <div className="relative h-64 overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-primary opacity-20 group-hover:opacity-40 transition-opacity z-10" />
-                  <img
-                    src={host.image}
-                    alt={host.name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                </div>
-
-                {/* Info */}
-                <div className="p-6">
-                  <h3 className="text-2xl font-bold mb-2">{host.name}</h3>
-                  <p className="text-primary text-sm font-medium mb-3">{host.show}</p>
-                  <p className="text-muted-foreground text-sm mb-4">{host.bio}</p>
-
-                  {/* Social Links */}
-                  <div className="flex gap-3">
-                    <a
-                      href="#"
-                      className="w-10 h-10 rounded-full glass flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all"
-                    >
-                      <Instagram className="w-4 h-4" />
-                    </a>
-                    <a
-                      href="#"
-                      className="w-10 h-10 rounded-full glass flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all"
-                    >
-                      <Twitter className="w-4 h-4" />
-                    </a>
-                  </div>
-                </div>
+              <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-accent-purple to-accent-blue flex items-center justify-center text-4xl group-hover:scale-110 transition-transform">
+                {host.avatar}
+              </div>
+              <h3 className="text-lg font-bold text-center mb-2">{host.name}</h3>
+              <p className="text-sm text-muted-foreground text-center mb-4">
+                {host.specialty}
+              </p>
+              <p className="text-sm text-center mb-4 line-clamp-3 text-muted-foreground">
+                {host.bio}
+              </p>
+              <div className="flex items-center justify-center gap-2">
+                {host.socials.map((social) => (
+                  <a
+                    key={social}
+                    href={`#${social.toLowerCase()}`}
+                    className="w-8 h-8 rounded-lg bg-accent hover:bg-accent/80 flex items-center justify-center transition-colors text-xs"
+                  >
+                    {social[0]}
+                  </a>
+                ))}
               </div>
             </div>
           ))}

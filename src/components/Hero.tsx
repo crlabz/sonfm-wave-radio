@@ -1,4 +1,4 @@
-import { Play, Pause } from 'lucide-react';
+import { Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 
@@ -6,66 +6,74 @@ const Hero = () => {
   const [isPlaying, setIsPlaying] = useState(false);
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      {/* Animated Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-primary/10" />
-      <div className="absolute inset-0 opacity-30">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/30 rounded-full blur-[100px] animate-pulse-glow" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/30 rounded-full blur-[100px] animate-pulse-glow animation-delay-2000" />
-      </div>
+    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+      {/* Background gradient */}
+      <div className="absolute inset-0 bg-gradient-radial opacity-50" />
+      <div className="absolute inset-0 bg-gradient-fade" />
+      
+      {/* Grid pattern */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
-          {/* Main Title */}
-          <div className="mb-8 animate-in fade-in slide-in-from-bottom-5 duration-1000">
-            <h1 className="text-6xl md:text-8xl font-bold mb-4 bg-gradient-primary bg-clip-text text-transparent text-glow">
-              Radio Web3
-            </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground">
-              La radio del futuro. Música, talk shows y más en vivo 24/7.
-            </p>
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent border border-border mb-8 animate-fade-in">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-blue opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-accent-blue" />
+            </span>
+            <span className="text-xs font-medium text-muted-foreground">TRANSMITIENDO EN VIVO</span>
           </div>
 
-          {/* Live Badge */}
-          <div className="flex items-center justify-center gap-3 mb-12 animate-in fade-in slide-in-from-bottom-5 duration-1000 delay-200">
-            <div className="flex items-center gap-2 glass px-6 py-3 rounded-full glow-primary">
-              <span className="relative flex h-3 w-3">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-primary" />
-              </span>
-              <span className="text-sm font-medium">EN VIVO AHORA</span>
-            </div>
-          </div>
+          {/* Title */}
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-slide-up">
+            La Radio del Futuro
+          </h1>
+          
+          <p className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto animate-slide-up" style={{ animationDelay: '0.1s' }}>
+            Música, podcasts y programas en vivo. Conecta con miles de oyentes en tiempo real.
+          </p>
 
-          {/* Play Button */}
-          <div className="mb-12 animate-in fade-in slide-in-from-bottom-5 duration-1000 delay-300">
+          {/* CTA */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 animate-slide-up" style={{ animationDelay: '0.2s' }}>
             <Button
               size="lg"
               onClick={() => setIsPlaying(!isPlaying)}
-              className="relative h-24 w-24 rounded-full bg-gradient-primary hover:scale-110 transition-all duration-300 glow-primary group"
+              className="gap-2 h-12 px-6"
             >
-              <div className="absolute inset-0 rounded-full bg-gradient-glow opacity-0 group-hover:opacity-100 transition-opacity blur-xl" />
-              {isPlaying ? (
-                <Pause className="w-10 h-10 relative z-10" />
-              ) : (
-                <Play className="w-10 h-10 relative z-10 ml-1" />
-              )}
+              <Play className="w-4 h-4" fill="currentColor" />
+              Escuchar Ahora
+            </Button>
+            <Button size="lg" variant="outline" className="h-12 px-6">
+              Ver Programación
             </Button>
           </div>
 
-          {/* Now Playing */}
-          <div className="glass p-8 rounded-3xl max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-5 duration-1000 delay-500">
-            <p className="text-sm text-muted-foreground mb-2">SONANDO AHORA</p>
-            <h3 className="text-2xl font-bold mb-1">The Midnight Drive</h3>
-            <p className="text-muted-foreground">con DJ Luna • Electrónica & Synthwave</p>
+          {/* Now Playing Card */}
+          <div className="max-w-2xl mx-auto p-6 rounded-2xl bg-card border border-border animate-slide-up" style={{ animationDelay: '0.3s' }}>
+            <div className="flex items-center gap-4">
+              <div className="w-16 h-16 rounded-xl bg-accent flex items-center justify-center shrink-0">
+                <span className="text-2xl">🎵</span>
+              </div>
+              <div className="flex-1 text-left">
+                <p className="text-xs text-muted-foreground mb-1">SONANDO AHORA</p>
+                <h3 className="font-semibold mb-1">The Midnight Drive</h3>
+                <p className="text-sm text-muted-foreground">con DJ Luna • Electrónica & Synthwave</p>
+              </div>
+              <div className="hidden sm:flex items-center gap-1">
+                {[...Array(5)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="w-1 bg-accent-blue rounded-full animate-pulse"
+                    style={{
+                      height: `${Math.random() * 24 + 8}px`,
+                      animationDelay: `${i * 0.1}s`,
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-        <div className="w-6 h-10 rounded-full border-2 border-primary flex items-start justify-center p-2">
-          <div className="w-1.5 h-3 bg-primary rounded-full animate-pulse" />
         </div>
       </div>
     </section>

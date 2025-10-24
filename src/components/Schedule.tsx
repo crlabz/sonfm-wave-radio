@@ -1,66 +1,76 @@
-import { Clock } from 'lucide-react';
+import { Clock, Radio } from 'lucide-react';
 
-const scheduleData = [
-  { time: '06:00 - 09:00', show: 'Buenos Días Web3', host: 'DJ Aurora', genre: 'Pop & Noticias' },
-  { time: '09:00 - 12:00', show: 'Ritmos Urbanos', host: 'MC Flow', genre: 'Hip Hop & Trap' },
-  { time: '12:00 - 15:00', show: 'Rock & Roll', host: 'DJ Thunder', genre: 'Rock Clásico' },
-  { time: '15:00 - 18:00', show: 'Tarde Tropical', host: 'DJ Salsa', genre: 'Salsa & Reggaeton' },
-  { time: '18:00 - 21:00', show: 'Electronic Dreams', host: 'DJ Neon', genre: 'House & Techno' },
-  { time: '21:00 - 00:00', show: 'The Midnight Drive', host: 'DJ Luna', genre: 'Synthwave' },
-  { time: '00:00 - 06:00', show: 'Late Night Vibes', host: 'DJ Shadow', genre: 'Chill & Lofi' },
+const schedule = [
+  {
+    day: 'Lunes',
+    shows: [
+      { time: '06:00', name: 'Morning Energy', host: 'DJ Nova', genre: 'EDM' },
+      { time: '12:00', name: 'Midday Vibes', host: 'Sofia Mix', genre: 'Pop' },
+      { time: '18:00', name: 'The Sunset Session', host: 'Alex Beat', genre: 'Chill' },
+      { time: '22:00', name: 'Late Night Drive', host: 'DJ Luna', genre: 'Synthwave', isLive: true },
+    ],
+  },
+  {
+    day: 'Martes',
+    shows: [
+      { time: '06:00', name: 'Wake Up Call', host: 'DJ Nova', genre: 'House' },
+      { time: '14:00', name: 'Afternoon Groove', host: 'Carlos Spin', genre: 'Funk' },
+      { time: '20:00', name: 'Night Beats', host: 'Sofia Mix', genre: 'Techno' },
+    ],
+  },
+  {
+    day: 'Miércoles',
+    shows: [
+      { time: '08:00', name: 'Morning Mix', host: 'Alex Beat', genre: 'Dance' },
+      { time: '15:00', name: 'Mid Week Party', host: 'DJ Luna', genre: 'EDM' },
+      { time: '21:00', name: 'Dark Pulse', host: 'Carlos Spin', genre: 'Dark Techno' },
+    ],
+  },
 ];
 
 const Schedule = () => {
   return (
-    <section id="schedule" className="py-20 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent" />
-      
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-6xl font-bold mb-4 bg-gradient-primary bg-clip-text text-transparent">
+    <section id="schedule" className="py-20 border-b border-border">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Programación Semanal
           </h2>
-          <p className="text-muted-foreground text-lg">
-            Lo mejor de cada género, todos los días
+          <p className="text-muted-foreground">
+            Todos tus programas favoritos en un solo lugar
           </p>
         </div>
 
-        <div className="max-w-4xl mx-auto space-y-4">
-          {scheduleData.map((item, index) => (
-            <div
-              key={index}
-              className="glass p-6 rounded-2xl hover:bg-card/50 transition-all duration-300 group animate-in fade-in slide-in-from-bottom-3"
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              <div className="flex flex-col md:flex-row md:items-center gap-4">
-                {/* Time */}
-                <div className="flex items-center gap-2 text-primary shrink-0">
-                  <Clock className="w-5 h-5" />
-                  <span className="font-semibold">{item.time}</span>
-                </div>
-
-                {/* Show Info */}
-                <div className="flex-1 min-w-0">
-                  <h3 className="text-xl font-bold mb-1 group-hover:text-primary transition-colors">
-                    {item.show}
-                  </h3>
-                  <div className="flex flex-wrap gap-3 text-sm text-muted-foreground">
-                    <span>con {item.host}</span>
-                    <span>•</span>
-                    <span>{item.genre}</span>
+        <div className="grid md:grid-cols-3 gap-6">
+          {schedule.map((daySchedule) => (
+            <div key={daySchedule.day} className="p-6 rounded-2xl bg-card border border-border">
+              <h3 className="text-xl font-bold mb-4">{daySchedule.day}</h3>
+              <div className="space-y-3">
+                {daySchedule.shows.map((show, index) => (
+                  <div
+                    key={index}
+                    className={`p-4 rounded-xl transition-all ${
+                      show.isLive
+                        ? 'bg-accent-blue/10 border border-accent-blue/20'
+                        : 'bg-accent hover:bg-accent/80'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2 mb-2">
+                      <Clock className="w-4 h-4 text-muted-foreground" />
+                      <span className="text-sm font-medium">{show.time}</span>
+                      {show.isLive && (
+                        <span className="ml-auto flex items-center gap-1 text-xs px-2 py-1 bg-accent-blue/20 text-accent-blue rounded-full">
+                          <Radio className="w-3 h-3" />
+                          EN VIVO
+                        </span>
+                      )}
+                    </div>
+                    <h4 className="font-semibold mb-1">{show.name}</h4>
+                    <p className="text-sm text-muted-foreground">
+                      {show.host} • {show.genre}
+                    </p>
                   </div>
-                </div>
-
-                {/* Active Indicator */}
-                {index === 5 && (
-                  <div className="flex items-center gap-2 glass px-3 py-1.5 rounded-full shrink-0">
-                    <span className="relative flex h-2 w-2">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
-                    </span>
-                    <span className="text-xs font-medium">AHORA</span>
-                  </div>
-                )}
+                ))}
               </div>
             </div>
           ))}
