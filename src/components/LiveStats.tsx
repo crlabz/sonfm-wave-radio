@@ -64,7 +64,7 @@ const LiveStats = () => {
   ];
 
   return (
-    <section className="py-20 bg-dark-surface">
+    <section id="live" className="py-20 bg-dark-surface">
       <div className="container mx-auto px-4">
         <motion.div 
           className="text-center mb-16"
