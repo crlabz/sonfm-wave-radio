@@ -20,13 +20,18 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4 text-sm">Enlaces Rápidos</h4>
             <ul className="space-y-2">
-              {['Inicio', 'En Vivo', 'Programación', 'Locutores'].map((link) => (
-                <li key={link}>
+              {[
+                { label: 'Inicio', href: '#hero' },
+                { label: 'En Vivo', href: '#live' },
+                { label: 'Programación', href: '#schedule' },
+                { label: 'Locutores', href: '#hosts' }
+              ].map((link) => (
+                <li key={link.label}>
                   <a
-                    href={`#${link.toLowerCase()}`}
+                    href={link.href}
                     className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                   >
-                    {link}
+                    {link.label}
                   </a>
                 </li>
               ))}
