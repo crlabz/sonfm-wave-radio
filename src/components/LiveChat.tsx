@@ -96,10 +96,12 @@ const LiveChat = () => {
   const [slowMode, setSlowMode] = useState(false);
   const [lastSentAt, setLastSentAt] = useState<number | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    const container = messagesContainerRef.current;
+    if (!container) return;
+    container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
   };
 
   useEffect(() => {
@@ -442,7 +444,10 @@ const LiveChat = () => {
                 </Tabs>
               </div>
 
-              <div className="h-[28rem] space-y-4 overflow-y-auto bg-dark-surface/50 p-6">
+              <div
+                ref={messagesContainerRef}
+                className="h-[28rem] space-y-4 overflow-y-auto bg-dark-surface/50 p-6"
+              >
                 <AnimatePresence>
                   {filteredMessages.map((msg, index) => (
                     <motion.div
@@ -587,7 +592,6 @@ const LiveChat = () => {
                     </motion.div>
                   ))}
                 </AnimatePresence>
-                <div ref={messagesEndRef} />
               </div>
 
               <motion.div
