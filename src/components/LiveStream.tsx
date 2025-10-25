@@ -1,13 +1,85 @@
 import { Play, Pause, Volume2, VolumeX, Radio } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 const LiveStream = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [volume, setVolume] = useState([70]);
   const [listeners] = useState(1247);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  // Radio stream URL
+  const streamUrl = 'https://stream-177.zeno.fm/is5vsx5ezpmvv?zt=eyJhbGciOiJIUzI1NiJ9.eyJzdHJlYW0iOiJpczV2c3g1ZXpwbXZ2IiwiaG9zdCI6InN0cmVhbS0xNzcuemVuby5mbSIsInJ0dGwiOjUsImp0aSI6IjhLWk1GMC1aUkdpYzU1d3ZIRWJqRGciLCJpYXQiOjE3NjEzNTgyMTMsImV4cCI6MTc2MTM1ODI3M30.FxBV2Z06XkO_K6k3nDf1YCRSBKmu3BYo06KCH1yf5H8';
+
+  // Initialize audio element
+  useEffect(() => {
+    if (!audioRef.current) {
+      audioRef.current = new Audio();
+      audioRef.current.crossOrigin = 'anonymous';
+      audioRef.current.preload = 'none';
+    }
+
+    const audio = audioRef.current;
+
+    const handleLoadStart = () => setIsLoading(true);
+    const handleCanPlay = () => setIsLoading(false);
+    const handleError = () => {
+      setError('Error al cargar la transmisión');
+      setIsLoading(false);
+      setIsPlaying(false);
+    };
+    const handlePlay = () => setIsPlaying(true);
+    const handlePause = () => setIsPlaying(false);
+
+    audio.addEventListener('loadstart', handleLoadStart);
+    audio.addEventListener('canplay', handleCanPlay);
+    audio.addEventListener('error', handleError);
+    audio.addEventListener('play', handlePlay);
+    audio.addEventListener('pause', handlePause);
+
+    return () => {
+      audio.removeEventListener('loadstart', handleLoadStart);
+      audio.removeEventListener('canplay', handleCanPlay);
+      audio.removeEventListener('error', handleError);
+      audio.removeEventListener('play', handlePlay);
+      audio.removeEventListener('pause', handlePause);
+    };
+  }, []);
+
+  // Handle play/pause
+  const togglePlay = async () => {
+    if (!audioRef.current) return;
+
+    try {
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.src = streamUrl;
+        await audioRef.current.play();
+      }
+    } catch (err) {
+      setError('Error al reproducir la transmisión');
+      console.error('Audio error:', err);
+    }
+  };
+
+  // Handle volume changes
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume[0] / 100;
+    }
+  }, [volume]);
+
+  // Handle mute
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.muted = isMuted;
+    }
+  }, [isMuted]);
 
   return (
     <section id="live" className="py-20 border-b border-border">
@@ -49,15 +121,29 @@ const LiveStream = () => {
               <p className="text-muted-foreground">DJ Luna • Electrónica & Synthwave</p>
             </div>
 
+            {/* Error Message */}
+            {error && (
+              <div className="mb-4 p-3 rounded-lg bg-destructive/10 border border-destructive/20 text-destructive text-sm text-center">
+                {error}
+              </div>
+            )}
+
             {/* Controls */}
             <div className="flex items-center justify-center gap-4 mb-6">
               <Button
                 size="icon"
                 variant="ghost"
-                onClick={() => setIsPlaying(!isPlaying)}
-                className="h-16 w-16 rounded-full bg-primary text-primary-foreground hover:bg-primary/90"
+                onClick={togglePlay}
+                disabled={isLoading}
+                className="h-16 w-16 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50"
               >
-                {isPlaying ? <Pause className="w-8 h-8" /> : <Play className="w-8 h-8" fill="currentColor" />}
+                {isLoading ? (
+                  <div className="w-8 h-8 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                ) : isPlaying ? (
+                  <Pause className="w-8 h-8" />
+                ) : (
+                  <Play className="w-8 h-8" fill="currentColor" />
+                )}
               </Button>
             </div>
 
