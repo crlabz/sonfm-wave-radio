@@ -298,52 +298,63 @@ const Schedule = () => {
         </motion.div>
 
         <motion.div
-          className="flex items-center justify-between mb-8"
+          className="flex flex-col gap-4 mb-8 md:flex-row md:items-center md:justify-between"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.6 }}
         >
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <motion.div
+            className="w-full md:w-auto"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
             <Button
               variant="outline"
               size="sm"
               onClick={() => setSelectedDay(Math.max(0, selectedDay - 1))}
               disabled={selectedDay === 0}
-              className="flex items-center gap-2 bg-dark-elevated border-dark-border hover:border-dark-red hover:shadow-red-glow text-dark-text-primary disabled:opacity-50"
+              className="flex w-full items-center justify-center gap-2 bg-dark-elevated border-dark-border hover:border-dark-red hover:shadow-red-glow text-dark-text-primary disabled:opacity-50 md:w-auto"
             >
               <ChevronLeft className="w-4 h-4" />
               Anterior
             </Button>
           </motion.div>
 
-          <div className="flex gap-3">
-            {schedule.map((day, index) => (
-              <motion.div
-                key={day.day}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.1 * index, duration: 0.4 }}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Button
-                  variant={selectedDay === index ? 'default' : 'outline'}
-                  size="sm"
-                  onClick={() => setSelectedDay(index)}
-                  className={`flex items-center gap-2 transition-all duration-300 ${
-                    selectedDay === index
-                      ? 'bg-gradient-red-power hover:shadow-red-glow-lg text-white border-0'
-                      : 'bg-dark-elevated border-dark-border hover:border-dark-red hover:shadow-red-glow text-dark-text-primary'
-                  }`}
+          <div className="w-full md:w-auto">
+            <div className="flex gap-3 overflow-x-auto pb-1 md:overflow-visible md:justify-center">
+              {schedule.map((day, index) => (
+                <motion.div
+                  key={day.day}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.1 * index, duration: 0.4 }}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="flex-shrink-0"
                 >
-                  <Calendar className="w-4 h-4" />
-                  {day.day}
-                </Button>
-              </motion.div>
-            ))}
+                  <Button
+                    variant={selectedDay === index ? 'default' : 'outline'}
+                    size="sm"
+                    onClick={() => setSelectedDay(index)}
+                    className={`flex items-center gap-2 whitespace-nowrap transition-all duration-300 ${
+                      selectedDay === index
+                        ? 'bg-gradient-red-power hover:shadow-red-glow-lg text-white border-0'
+                        : 'bg-dark-elevated border-dark-border hover:border-dark-red hover:shadow-red-glow text-dark-text-primary'
+                    }`}
+                  >
+                    <Calendar className="w-4 h-4" />
+                    {day.day}
+                  </Button>
+                </motion.div>
+              ))}
+            </div>
           </div>
 
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <motion.div
+            className="w-full md:w-auto"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
             <Button
               variant="outline"
               size="sm"
@@ -351,7 +362,7 @@ const Schedule = () => {
                 setSelectedDay(Math.min(schedule.length - 1, selectedDay + 1))
               }
               disabled={selectedDay === schedule.length - 1}
-              className="flex items-center gap-2 bg-dark-elevated border-dark-border hover:border-dark-red hover:shadow-red-glow text-dark-text-primary disabled:opacity-50"
+              className="flex w-full items-center justify-center gap-2 bg-dark-elevated border-dark-border hover:border-dark-red hover:shadow-red-glow text-dark-text-primary disabled:opacity-50 md:w-auto"
             >
               Siguiente
               <ChevronRight className="w-4 h-4" />
@@ -370,8 +381,8 @@ const Schedule = () => {
             >
               <div className="absolute inset-0 bg-gradient-to-r from-dark-red/20 to-dark-red-hover/20" />
               <div className="relative z-10">
-                <div className="flex items-center justify-between">
-                  <div>
+                <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+                  <div className="w-full">
                     <motion.div
                       className="flex items-center gap-3 mb-3"
                       initial={{ opacity: 0, x: -20 }}
@@ -411,7 +422,7 @@ const Schedule = () => {
                       {currentShow.host} • {currentShow.genre}
                     </motion.p>
                     <motion.div
-                      className="flex items-center gap-6 text-sm"
+                      className="flex flex-wrap items-center gap-4 text-sm sm:gap-6"
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.6, duration: 0.5 }}
@@ -423,8 +434,9 @@ const Schedule = () => {
                   <motion.div
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
+                    className="w-full md:w-auto"
                   >
-                    <Button className="bg-white/20 hover:bg-white/30 text-white border-white/30 shadow-lg hover:shadow-xl transition-all duration-300">
+                    <Button className="w-full bg-white/20 hover:bg-white/30 text-white border-white/30 shadow-lg hover:shadow-xl transition-all duration-300 md:w-auto">
                       <Play className="w-5 h-5 mr-2" />
                       Escuchar
                     </Button>
@@ -491,9 +503,9 @@ const Schedule = () => {
                       />
                     )}
 
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-4 mb-4">
+                    <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex flex-wrap items-center gap-4 mb-4">
                           <div className="flex items-center gap-2">
                             <Clock className="w-4 h-4 text-dark-text-secondary" />
                             <span className="font-bold text-dark-text-primary">
@@ -535,7 +547,7 @@ const Schedule = () => {
                           {show.name}
                         </h4>
 
-                        <div className="flex items-center gap-6 text-sm text-dark-text-secondary mb-4">
+                        <div className="flex flex-wrap items-center gap-4 text-sm text-dark-text-secondary mb-4 sm:gap-6">
                           <div className="flex items-center gap-2">
                             <User className="w-4 h-4" />
                             <span>{show.host}</span>
@@ -560,14 +572,14 @@ const Schedule = () => {
                       </div>
 
                       <motion.div
-                        className="opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0"
+                        className="opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 transform md:translate-x-2 md:group-hover:translate-x-0"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >
                         <Button
                           size="sm"
                           variant="outline"
-                          className="shadow-lg hover:shadow-red-glow bg-dark-elevated border-dark-border hover:border-dark-red text-dark-text-primary"
+                          className="w-full shadow-lg hover:shadow-red-glow bg-dark-elevated border-dark-border hover:border-dark-red text-dark-text-primary md:w-auto"
                         >
                           <Play className="w-4 h-4 mr-2" />
                           Escuchar
