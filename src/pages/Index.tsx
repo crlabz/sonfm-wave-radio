@@ -2,7 +2,6 @@ import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import LiveStats from '@/components/LiveStats';
 import LiveChat from '@/components/LiveChat';
-import PodcastPlayer from '@/components/PodcastPlayer';
 import Schedule from '@/components/Schedule';
 import Hosts from '@/components/Hosts';
 import ContactForm from '@/components/ContactForm';
@@ -37,7 +36,6 @@ const Index = () => {
         <Hero />
         <LiveStats />
         <LiveChat />
-        <PodcastPlayer />
         <Schedule />
         <Hosts />
         <ContactForm />
