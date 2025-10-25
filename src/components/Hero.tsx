@@ -1,4 +1,4 @@
-import { Play, Pause, Radio, Users, Clock, Zap, Volume2 } from 'lucide-react';
+import { Play, Pause, Radio, Users, Clock, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
@@ -34,13 +34,13 @@ const Hero = () => {
 
   // Initialize audio element
   useEffect(() => {
-    if (!audioRef.current) {
-      audioRef.current = new Audio();
-      audioRef.current.crossOrigin = 'anonymous';
-      audioRef.current.preload = 'none';
-    }
-
     const audio = audioRef.current;
+
+    if (!audio) return;
+
+    audio.crossOrigin = 'anonymous';
+    audio.preload = 'none';
+    audio.setAttribute('playsinline', 'true');
 
     const handleLoadStart = () => setIsLoading(true);
     const handleCanPlay = () => setIsLoading(false);
@@ -75,7 +75,10 @@ const Hero = () => {
       if (isPlaying) {
         audioRef.current.pause();
       } else {
-        audioRef.current.src = streamUrl;
+        if (!audioRef.current.src) {
+          audioRef.current.src = streamUrl;
+          audioRef.current.load();
+        }
         await audioRef.current.play();
       }
     } catch (err) {
@@ -85,10 +88,10 @@ const Hero = () => {
   };
 
   return (
-    <section 
+    <section
       ref={heroRef}
-      id="hero" 
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-dark-main"
+      id="hero"
+      className="relative min-h-screen flex items-start sm:items-center justify-center overflow-hidden bg-dark-main py-16 sm:py-20"
     >
       {/* Dark Power Background with Dynamic Red Glow */}
       <div 
@@ -141,20 +144,20 @@ const Hero = () => {
       </div>
 
       {/* Content */}
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-5 sm:px-6 relative z-10">
         <div className="max-w-6xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-12 items-start">
             
             {/* Left Column - Main Content */}
-            <motion.div 
-              className="text-center lg:text-left"
+            <motion.div
+              className="text-center lg:text-left max-w-2xl mx-auto lg:mx-0"
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
             >
               {/* ON AIR Badge with Red Glow */}
-              <motion.div 
-                className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-dark-red/10 border border-dark-red/30 mb-8 shadow-red-glow"
+              <motion.div
+                className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-dark-red/10 border border-dark-red/30 mb-6 sm:mb-8 shadow-red-glow"
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ delay: 0.2, duration: 0.6 }}
@@ -168,12 +171,12 @@ const Hero = () => {
                   />
                   <div className="relative inline-flex rounded-full h-3 w-3 bg-dark-red animate-pulse" />
                 </div>
-                <span className="text-sm font-bold text-dark-red tracking-wider">ON AIR</span>
+                <span className="text-xs sm:text-sm font-bold text-dark-red tracking-wider">ON AIR</span>
               </motion.div>
 
               {/* Main Title with Red Accent */}
-              <motion.h1 
-                className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-black mb-6"
+              <motion.h1
+                className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-4 sm:mb-6"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.8 }}
@@ -186,13 +189,13 @@ const Hero = () => {
               </motion.h1>
               
               {/* Subtitle */}
-              <motion.p 
-                className="text-lg sm:text-xl md:text-2xl text-dark-text-secondary mb-8 font-light leading-relaxed"
+              <motion.p
+                className="text-base sm:text-lg md:text-xl text-dark-text-secondary mb-6 sm:mb-8 font-light leading-relaxed"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4, duration: 0.8 }}
               >
-                La plataforma de radio digital más avanzada. 
+                La plataforma de radio digital más avanzada.
                 <br className="hidden sm:block" />
                 Música, podcasts y contenido en vivo 24/7.
               </motion.p>
@@ -210,8 +213,8 @@ const Hero = () => {
               )}
 
               {/* CTA Buttons */}
-              <motion.div 
-                className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
+              <motion.div
+                className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.8 }}
@@ -221,7 +224,7 @@ const Hero = () => {
                     size="lg"
                     onClick={togglePlay}
                     disabled={isLoading}
-                    className="group relative h-14 sm:h-16 px-6 sm:px-8 bg-gradient-red-power text-white border-0 rounded-xl font-bold text-base sm:text-lg transition-transform duration-200 disabled:opacity-50 w-full sm:w-auto"
+                    className="group relative h-12 sm:h-14 px-6 sm:px-8 bg-gradient-red-power text-white border-0 rounded-xl font-bold text-base sm:text-lg transition-transform duration-200 disabled:opacity-50 w-full sm:w-auto"
                   >
                     <div className="flex items-center gap-3">
                       {isLoading ? (
@@ -239,10 +242,10 @@ const Hero = () => {
                 </motion.div>
                 
                 <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                  <Button 
-                    size="lg" 
-                    variant="outline" 
-                    className="h-14 sm:h-16 px-6 sm:px-8 bg-dark-elevated border-dark-border text-dark-text-primary hover:text-dark-text-primary transition-transform duration-200 rounded-xl w-full sm:w-auto"
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="h-12 sm:h-14 px-6 sm:px-8 bg-dark-elevated border-dark-border text-dark-text-primary hover:text-dark-text-primary transition-transform duration-200 rounded-xl w-full sm:w-auto"
                   >
                     Ver Programación
                   </Button>
@@ -251,13 +254,13 @@ const Hero = () => {
             </motion.div>
 
             {/* Right Column - Live Stats & Info */}
-            <motion.div 
-              className="animate-slide-up"
+            <motion.div
+              className="animate-slide-up mt-10 sm:mt-12 lg:mt-0 max-w-xl mx-auto lg:mx-0 w-full"
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.6, duration: 0.8 }}
             >
-              <div className="bg-dark-card backdrop-blur-sm border border-dark-border rounded-2xl p-8 shadow-lg">
+              <div className="bg-dark-card/80 backdrop-blur-sm border border-dark-border rounded-2xl p-6 sm:p-8 shadow-lg">
                 {/* Now Playing */}
                 <div className="flex items-center gap-4 mb-8">
                   <motion.div 
@@ -275,8 +278,8 @@ const Hero = () => {
                 </div>
 
                 {/* Live Stats Grid */}
-                <div className="grid grid-cols-3 gap-6">
-                  <motion.div 
+                <div className="grid grid-cols-3 gap-4 sm:gap-6">
+                  <motion.div
                     className="text-center"
                     whileHover={{ scale: 1.05 }}
                     transition={{ type: "spring", stiffness: 300 }}
@@ -320,6 +323,8 @@ const Hero = () => {
 
       {/* Bottom gradient fade */}
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-dark-main to-transparent" />
+
+      <audio ref={audioRef} className="hidden" preload="none" />
     </section>
   );
 };
