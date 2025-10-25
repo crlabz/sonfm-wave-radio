@@ -93,11 +93,10 @@ const LiveStats = () => {
                 stiffness: 100
               }}
               whileHover={{ 
-                y: -4, 
-                scale: 1.02,
-                transition: { duration: 0.2 }
+                scale: 1.01,
+                transition: { duration: 0.15 }
               }}
-              className={`group relative p-8 rounded-2xl bg-dark-card border border-dark-border hover-lift transition-all duration-300`}
+              className={`group relative p-8 rounded-2xl bg-dark-card border border-dark-border hover-lift transition-transform duration-200`}
             >
               {/* Background glow effect */}
               <motion.div 

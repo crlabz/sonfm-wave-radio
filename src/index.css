@@ -2,6 +2,73 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Smooth scrolling and prevent layout shifts */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+body {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+/* Prevent automatic scrolling to elements */
+html:not([data-scroll-behavior="smooth"]) {
+  scroll-behavior: auto;
+}
+
+/* Ensure page starts at top */
+html, body {
+  scroll-behavior: smooth;
+}
+
+/* Prevent layout shifts */
+* {
+  box-sizing: border-box;
+}
+
+/* Smooth scroll for all elements */
+* {
+  scroll-behavior: smooth;
+}
+
+/* Prevent layout shifts and improve performance */
+* {
+  will-change: auto;
+}
+
+/* Optimize animations for better performance */
+.motion-safe {
+  will-change: transform;
+}
+
+/* Prevent jumping on hover */
+.hover-lift,
+.hover-scale,
+.hover-glow,
+.hover-border {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Smooth transitions for all interactive elements */
+button, 
+a, 
+[role="button"] {
+  transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Prevent text selection on interactive elements */
+button, 
+[role="button"] {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
 All colors MUST be HSL.
 */
@@ -175,41 +242,43 @@ All colors MUST be HSL.
     box-shadow: var(--shadow-red-glow-lg);
   }
   
-  /* Modern Vercel-style hover animations */
+  /* Modern Vercel-style hover animations - Fixed to prevent jumping */
   .hover-lift {
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
   }
   
   .hover-lift:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   }
   
   .hover-scale {
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
   }
   
   .hover-scale:hover {
-    transform: scale(1.02);
-    box-shadow: 0 8px 20px -4px rgba(0, 0, 0, 0.2);
+    transform: scale(1.01);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
   
   .hover-glow {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
   .hover-glow:hover {
-    box-shadow: 0 0 0 1px rgba(255, 0, 0, 0.1), 0 4px 12px rgba(255, 0, 0, 0.15);
+    box-shadow: 0 0 0 1px rgba(255, 0, 0, 0.1), 0 2px 8px rgba(255, 0, 0, 0.1);
   }
   
   .hover-border {
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     border: 1px solid transparent;
   }
   
   .hover-border:hover {
-    border-color: rgba(255, 0, 0, 0.3);
-    box-shadow: 0 4px 12px rgba(255, 0, 0, 0.1);
+    border-color: rgba(255, 0, 0, 0.2);
+    box-shadow: 0 2px 8px rgba(255, 0, 0, 0.05);
   }
   
   .animate-fade-in {

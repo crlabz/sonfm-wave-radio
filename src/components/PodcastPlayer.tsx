@@ -224,11 +224,10 @@ const PodcastPlayer = () => {
                     stiffness: 100
                   }}
                   whileHover={{ 
-                    y: -4, 
                     scale: 1.01,
-                    transition: { duration: 0.2 }
+                    transition: { duration: 0.15 }
                   }}
-                  className="group relative bg-dark-card rounded-2xl shadow-lg border border-dark-border overflow-hidden hover-lift transition-all duration-300"
+                  className="group relative bg-dark-card rounded-2xl shadow-lg border border-dark-border overflow-hidden hover-lift transition-transform duration-200"
               >
                   {/* Image/Icon */}
                   <div className={`relative h-40 sm:h-48 bg-gradient-to-br ${podcast.color} flex items-center justify-center text-4xl sm:text-6xl overflow-hidden`}>
@@ -270,11 +269,11 @@ const PodcastPlayer = () => {
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.95 }}
                       >
-                    <Button
-                      size="lg"
-                      onClick={() => handlePlay(podcast.id)}
-                          className="h-16 w-16 rounded-full bg-gradient-red-power text-white border-0 backdrop-blur-sm hover-scale"
-                    >
+                        <Button
+                          size="lg"
+                          onClick={() => handlePlay(podcast.id)}
+                          className="h-16 w-16 rounded-full bg-gradient-red-power text-white border-0 backdrop-blur-sm transition-transform duration-150 hover:scale-105"
+                        >
                           <AnimatePresence mode="wait">
                       {playingId === podcast.id && isPlaying ? (
                               <motion.div

@@ -216,12 +216,12 @@ const Hero = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.8 }}
               >
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                   <Button
                     size="lg"
                     onClick={togglePlay}
                     disabled={isLoading}
-                    className="group relative h-14 sm:h-16 px-6 sm:px-8 bg-gradient-red-power text-white border-0 rounded-xl font-bold text-base sm:text-lg transition-all duration-300 disabled:opacity-50 hover-scale w-full sm:w-auto"
+                    className="group relative h-14 sm:h-16 px-6 sm:px-8 bg-gradient-red-power text-white border-0 rounded-xl font-bold text-base sm:text-lg transition-transform duration-200 disabled:opacity-50 w-full sm:w-auto"
                   >
                     <div className="flex items-center gap-3">
                       {isLoading ? (
@@ -238,11 +238,11 @@ const Hero = () => {
                   </Button>
                 </motion.div>
                 
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                   <Button 
                     size="lg" 
                     variant="outline" 
-                    className="h-14 sm:h-16 px-6 sm:px-8 bg-dark-elevated border-dark-border text-dark-text-primary hover:text-dark-text-primary transition-all duration-300 rounded-xl hover-border w-full sm:w-auto"
+                    className="h-14 sm:h-16 px-6 sm:px-8 bg-dark-elevated border-dark-border text-dark-text-primary hover:text-dark-text-primary transition-transform duration-200 rounded-xl w-full sm:w-auto"
                   >
                     Ver Programación
                   </Button>

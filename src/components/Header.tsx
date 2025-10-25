@@ -4,6 +4,12 @@ import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 
 const smoothScrollTo = (elementId: string) => {
+  // Only scroll if it's not the hero section
+  if (elementId === 'hero') {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    return;
+  }
+  
   const element = document.getElementById(elementId);
   if (element) {
     element.scrollIntoView({
@@ -25,7 +31,10 @@ const Header = () => {
   ];
 
   const handleNavClick = (href: string) => {
-    smoothScrollTo(href);
+    // Add a small delay to prevent conflicts
+    setTimeout(() => {
+      smoothScrollTo(href);
+    }, 10);
     setIsMenuOpen(false);
   };
 
@@ -85,14 +94,14 @@ const Header = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <Button
-              variant="ghost"
-              size="icon"
+          <Button
+            variant="ghost"
+            size="icon"
               className="md:hidden bg-dark-elevated border border-dark-border hover:border-dark-red hover:shadow-red-glow"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
               {isMenuOpen ? <X className="w-5 h-5 text-dark-text-primary" /> : <Menu className="w-5 h-5 text-dark-text-primary" />}
-            </Button>
+          </Button>
           </motion.div>
         </div>
       </div>
@@ -110,18 +119,18 @@ const Header = () => {
         <nav className="container mx-auto px-4 py-4 flex flex-col gap-2">
           {navItems.map((item, index) => (
             <motion.button
-              key={item.label}
+                key={item.label}
               onClick={() => handleNavClick(item.href)}
               className="px-4 py-3 text-sm text-dark-text-secondary hover:text-dark-text-primary transition-all duration-300 rounded-lg hover:bg-dark-elevated hover:border-dark-red/30 border border-transparent"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.1 * index, duration: 0.3 }}
               whileHover={{ scale: 1.02, x: 5 }}
-            >
-              {item.label}
+              >
+                {item.label}
             </motion.button>
-          ))}
-        </nav>
+            ))}
+          </nav>
       </motion.div>
     </motion.header>
   );

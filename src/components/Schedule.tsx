@@ -276,11 +276,10 @@ const Schedule = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1, duration: 0.4 }}
                     whileHover={{ 
-                      y: -2, 
                       scale: 1.01,
-                      transition: { duration: 0.2 }
+                      transition: { duration: 0.15 }
                     }}
-                    className={`group relative p-6 rounded-xl border transition-all duration-300 cursor-pointer ${
+                    className={`group relative p-6 rounded-xl border transition-transform duration-200 cursor-pointer ${
                       show.isLive
                         ? 'bg-gradient-to-r from-dark-red/10 to-dark-red-hover/10 border-dark-red hover-lift'
                         : hoveredShow === `${selectedDay}-${index}`

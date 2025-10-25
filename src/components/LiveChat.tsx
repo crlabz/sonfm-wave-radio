@@ -199,7 +199,7 @@ const LiveChat = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.6 }}
         >
-          <div className="bg-dark-card border border-dark-border rounded-2xl overflow-hidden shadow-lg hover-lift transition-all duration-300">
+          <div className="bg-dark-card border border-dark-border rounded-2xl overflow-hidden shadow-lg hover-lift transition-transform duration-200">
             {/* Chat Header */}
             <motion.div 
               className="bg-dark-elevated border-b border-dark-border p-6"
@@ -406,7 +406,7 @@ const LiveChat = () => {
                     type="submit" 
                     size="sm" 
                     disabled={!newMessage.trim()}
-                    className="bg-gradient-red-power text-white border-0 disabled:opacity-50 hover-scale"
+                    className="bg-gradient-red-power text-white border-0 disabled:opacity-50 transition-transform duration-150 hover:scale-105"
                   >
                     <Send className="w-4 h-4" />
                   </Button>
