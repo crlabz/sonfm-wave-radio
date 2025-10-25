@@ -8,11 +8,33 @@ const Hero = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
+  const [isHoverEnabled, setIsHoverEnabled] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
 
   // Radio stream URL
   const streamUrl = 'https://stream-177.zeno.fm/is5vsx5ezpmvv?zt=eyJhbGciOiJIUzI1NiJ9.eyJzdHJlYW0iOiJpczV2c3g1ZXpwbXZ2IiwiaG9zdCI6InN0cmVhbS0xNzcuemVuby5mbSIsInJ0dGwiOjUsImp0aSI6IjhLWk1GMC1aUkdpYzU1d3ZIRWJqRGciLCJpYXQiOjE3NjEzNTgyMTMsImV4cCI6MTc2MTM1ODI3M30.FxBV2Z06XkO_K6k3nDf1YCRSBKmu3BYo06KCH1yf5H8';
+
+  // Detect if the device supports hover interactions (desktop vs touch devices)
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const mediaQuery = window.matchMedia('(hover: hover) and (pointer: fine)');
+
+    const updateHoverState = (event?: MediaQueryListEvent) => {
+      setIsHoverEnabled(event ? event.matches : mediaQuery.matches);
+    };
+
+    updateHoverState();
+
+    if (typeof mediaQuery.addEventListener === 'function') {
+      mediaQuery.addEventListener('change', updateHoverState);
+      return () => mediaQuery.removeEventListener('change', updateHoverState);
+    }
+
+    mediaQuery.addListener(updateHoverState);
+    return () => mediaQuery.removeListener(updateHoverState);
+  }, []);
 
   // Mouse tracking for subtle gradient effect
   useEffect(() => {
@@ -161,7 +183,7 @@ const Hero = () => {
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ delay: 0.2, duration: 0.6 }}
-                whileHover={{ scale: 1.05 }}
+                whileHover={isHoverEnabled ? { scale: 1.05 } : undefined}
               >
                 <div className="relative flex h-3 w-3">
                   <motion.div 
@@ -219,7 +241,10 @@ const Hero = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.8 }}
               >
-                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <motion.div
+                  whileHover={isHoverEnabled ? { scale: 1.02 } : undefined}
+                  whileTap={{ scale: 0.98 }}
+                >
                   <Button
                     size="lg"
                     onClick={togglePlay}
@@ -241,7 +266,10 @@ const Hero = () => {
                   </Button>
                 </motion.div>
                 
-                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <motion.div
+                  whileHover={isHoverEnabled ? { scale: 1.02 } : undefined}
+                  whileTap={{ scale: 0.98 }}
+                >
                   <Button
                     size="lg"
                     variant="outline"
@@ -265,7 +293,7 @@ const Hero = () => {
                 <div className="flex items-center gap-4 mb-8">
                   <motion.div 
                     className="w-16 h-16 rounded-xl bg-gradient-red-power flex items-center justify-center shrink-0 shadow-red-glow"
-                    whileHover={{ scale: 1.1, rotate: 5 }}
+                    whileHover={isHoverEnabled ? { scale: 1.1, rotate: 5 } : undefined}
                     transition={{ type: "spring", stiffness: 300 }}
                   >
                     <Radio className="w-8 h-8 text-white" />
@@ -281,7 +309,7 @@ const Hero = () => {
                 <div className="grid grid-cols-3 gap-4 sm:gap-6">
                   <motion.div
                     className="text-center"
-                    whileHover={{ scale: 1.05 }}
+                    whileHover={isHoverEnabled ? { scale: 1.05 } : undefined}
                     transition={{ type: "spring", stiffness: 300 }}
                   >
                     <div className="flex items-center justify-center mb-2">
@@ -293,7 +321,7 @@ const Hero = () => {
                   
                   <motion.div 
                     className="text-center"
-                    whileHover={{ scale: 1.05 }}
+                    whileHover={isHoverEnabled ? { scale: 1.05 } : undefined}
                     transition={{ type: "spring", stiffness: 300 }}
                   >
                     <div className="flex items-center justify-center mb-2">
@@ -305,7 +333,7 @@ const Hero = () => {
                   
                   <motion.div 
                     className="text-center"
-                    whileHover={{ scale: 1.05 }}
+                    whileHover={isHoverEnabled ? { scale: 1.05 } : undefined}
                     transition={{ type: "spring", stiffness: 300 }}
                   >
                     <div className="flex items-center justify-center mb-2">
