@@ -24,7 +24,6 @@ const Header = () => {
 
   const navItems = [
     { label: 'En Vivo', href: 'hero' },
-    { label: 'Podcasts', href: 'podcasts' },
     { label: 'Programación', href: 'schedule' },
     { label: 'Locutores', href: 'hosts' },
     { label: 'Contacto', href: 'contact' },
