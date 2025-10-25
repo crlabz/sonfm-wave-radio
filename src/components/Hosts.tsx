@@ -27,6 +27,34 @@ const hosts = [
     avatar: '🎵',
     socials: ['Instagram', 'Twitter'],
   },
+  {
+    name: 'Alexa Beat',
+    specialty: 'Co-host IA & Automatización',
+    bio: 'Integra inteligencia artificial con mezclas en vivo y automatiza las peticiones desde smart speakers.',
+    avatar: '🤖',
+    socials: ['Twitch', 'YouTube'],
+  },
+  {
+    name: 'Mara Podcast',
+    specialty: 'Podcasts & Contenido On-Demand',
+    bio: 'Produce cápsulas diarias que también se publican en Spotify, Apple Podcasts y radios digitales.',
+    avatar: '🎙️',
+    socials: ['Spotify', 'Apple'],
+  },
+  {
+    name: 'Global Stream',
+    specialty: 'Coberturas Live desde Festivales',
+    bio: 'Conecta a la audiencia con transmisiones 360°, Live Shopping y sesiones exclusivas de TikTok Music.',
+    avatar: '🌍',
+    socials: ['TikTok', 'Instagram'],
+  },
+  {
+    name: 'XR VJ',
+    specialty: 'Visuales XR & Realidad Aumentada',
+    bio: 'Sincroniza visuales inmersivos con las sesiones de radio para eventos en el metaverso y cabinas híbridas.',
+    avatar: '🕶️',
+    socials: ['Twitch', 'Discord'],
+  },
 ];
 
 const Hosts = () => {
